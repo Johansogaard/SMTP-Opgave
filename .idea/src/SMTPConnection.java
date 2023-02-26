@@ -42,6 +42,7 @@ if(!reply.startsWith("220")){
 	/* SMTP handshake. We need the name of the local machine.
 	   Send the appropriate SMTP handshake command. */
         String localhost = InetAddress.getLocalHost().getHostAddress();
+        //confirm that the server is ready to receive mail.
         sendCommand(+localhost,250);
 
         isConnected = true;
