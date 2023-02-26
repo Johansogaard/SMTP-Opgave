@@ -67,8 +67,8 @@ if(!reply.startsWith("220")){
     public void close() {
         isConnected = false;
         try {
-            sendCommand( /* Fill in */ );
-            // connection.close();
+            sendCommand( "QUIT",221 );
+            connection.close();
         } catch (IOException e) {
             out.println("Unable to close connection: " + e);
             isConnected = true;
