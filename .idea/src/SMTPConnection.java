@@ -2,6 +2,8 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
+import static java.lang.System.out;
+
 /**
  * Open an SMTP connection to a mailserver and send one mail.
  *
@@ -36,14 +38,15 @@ public class SMTPConnection {
 	   If not, throw an IOException. */
 //using bufferedreader readline
 String reply=fromServer.readLine();
+
 if(!reply.startsWith("220")){
     throw new IOException("Invalid reply from server:" + reply);
 }
 	/* SMTP handshake. We need the name of the local machine.
 	   Send the appropriate SMTP handshake command. */
-        String localhost = InetAddress.getLocalHost().getHostAddress();
+        String localhost = InetAddress.getLocalHost().getHostName();
         //confirm that the server is ready to receive mail.
-        sendCommand(+localhost,250);
+        sendCommand("HELLO"+localhost,250);
 
         isConnected = true;
     }
@@ -67,7 +70,7 @@ if(!reply.startsWith("220")){
             sendCommand( /* Fill in */ );
             // connection.close();
         } catch (IOException e) {
-            System.out.println("Unable to close connection: " + e);
+            out.println("Unable to close connection: " + e);
             isConnected = true;
         }
     }
@@ -77,12 +80,22 @@ if(!reply.startsWith("220")){
     private void sendCommand(String command, int rc) throws IOException {
         /* Fill in */
         /* Write command to server and read reply from server. */
+
+        // send the command to the server
+        toServer.write(command.getBytes());
+        toServer.write("\r\n".getBytes());
+
+        // read the server's reply
+        String reply = fromServer.readLine();
+
         /* Fill in */
 
         /* Fill in */
 	/* Check that the server's reply code is the same as the parameter
 	   rc. If not, throw an IOException. *d/
         /* Fill in */
+
+
     }
 
     /* Parse the reply line from the server. Returns the reply code. */
